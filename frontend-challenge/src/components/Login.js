@@ -18,14 +18,22 @@ function Login() {
                             Try it free 7 days <span className="regular-font">then $20/mo. thereafter</span>
                         </p>
                     </div>
-                    <div className="announcement-shadow"/>
                     
+                    <form className="login-form">
+                        <input placeholder="First Name" type="text" className="input-login-form" >
+                        </input>
+                        <input placeholder="Last Name" type="text" className="input-login-form">
+                        </input>
+                        <input placeholder="Email Address" type="text" className="input-login-form" >
+                        </input>
+                        <input placeholder="Password" type="password" className="input-login-form" >
+                        </input>
 
-                    <div className="login-form">
+                        <input type="submit" value="CLAIM YOUR FREE TRIAL" className="submit-login-btn"/>
                         
-                    </div>
-                    
 
+                        <p className="agreement-form">By clicking the button, you're agreeing to our <span className="terms-service">Terms of Service</span></p>
+                    </form>
                 </div>
             </div>
             

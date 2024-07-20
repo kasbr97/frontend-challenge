@@ -29,28 +29,24 @@
 
 .right-side-div {
     position: absolute;
-    width: 35vw;
-    margin-inline: 20px;
+    transform: translate(0, -50%);
+    width: 30vw;
+    margin-inline: 50px;
 }
 
 .announcement {
     position: relative;
     background-color: hsl(248, 32%, 49%);
     border-radius: 10px;
-    z-index: 9;
+
+    -webkit-box-shadow: 0px 7px 0px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0px 7px 0px rgba(0, 0, 0, .1);
+    box-shadow: 0px 7px 0px rgba(0, 0, 0, .1);
 }
 
-.announcement-shadow {
-    background-color: hsl(249, 10%, 26%);
-    height: 50px;
-    transform: translate(0, -115%);
-    border-radius: 10px;
-    z-index: 1;
-    opacity: 0.2;
-}
 
 .announcement-text {
-    padding: 20px;
+    padding: 16px 20px;
     color: white;
     text-align: center;
     font-family: PoppinsBold;
@@ -58,5 +54,72 @@
 
 .regular-font {
     font-family: PoppinsRegular;
+}
+
+/********** LOGIN FORM ***********/
+.login-form {
+    position: relative;
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px 30px;
+    display: flex;
+    flex-direction: column;
+    /* transform: translate(0, -10%); */
+
+    -webkit-box-shadow: 0px 9px 0px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0px 9px 0px rgba(0, 0, 0, .1);
+    box-shadow:  0px 9px 0px rgba(0, 0, 0, .1);
+}
+
+/* input[type=text], input[type=password] { */
+.input-login-form {
+    width: 100%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 1px solid #c7c7c7;
+    caret-color: hsl(248, 32%, 49%);
+    border-radius: 4px;
+    box-sizing: border-box;
+    outline: none;
+    font-family: PoppinsSemiBold;
+    margin-bottom: 15px;
+}
+
+.input-login-form:focus {
+    border: 1px solid hsl(248, 32%, 49%);
+}
+
+
+.submit-login-btn {
+    background-color: hsl(154, 59%, 51%);
+    border-radius: 4px;
+    padding: 16px 20px 12px 20px;
+    font-family: PoppinsSemiBold;
+    color: white;
+    outline: none;
+    border: 1px solid hsl(154, 59%, 43%);
+    cursor: pointer;
+
+    -webkit-box-shadow: 0px 3px 0px hsl(154, 59%, 43%), 0px 3px 0px rgba(0, 0, 0, .7);
+    -moz-box-shadow: 0px 3px 0px hsl(154, 59%, 43%), 0px 3px 0px rgba(0, 0, 0, .7);
+    box-shadow: 0px 3px 0px hsl(154, 59%, 43%), 0px 3px 0px rgba(0, 0, 0, .7);
+}
+
+.submit-login-btn:hover {
+    background-color: hsl(154, 84%, 63%);
+    border: 1px solid hsl(154, 84%, 63%);
+}
+
+.agreement-form {
+    font-family: PoppinsMedium;
+    color: hsl(246, 25%, 77%);
+    font-size: 10px;
+    text-align: center;
+}
+
+.terms-service {
+    font-family: PoppinsSemiBold;
+    cursor: pointer;
+    color: hsl(0, 100%, 74%);
 }
 
