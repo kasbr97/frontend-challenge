@@ -1,0 +1,62 @@
+.background-image {
+    background-image: url("./../../images/bg-intro-desktop.png");
+    background-color: hsl(0, 100%, 74%);
+    height: 100vh;
+}
+
+.centered-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.left-side-div {
+    position: absolute;
+    transform: translate(-100%, -50%);
+    width: 35vw;
+}
+
+.font-title-lg {
+    font-family: PoppinsBold;
+    font-size: 48px;
+    color: white;
+}
+
+.font-text-sm {
+    font-family: PoppinsRegular;
+    color: white;
+}
+
+.right-side-div {
+    position: absolute;
+    width: 35vw;
+    margin-inline: 20px;
+}
+
+.announcement {
+    position: relative;
+    background-color: hsl(248, 32%, 49%);
+    border-radius: 10px;
+    z-index: 9;
+}
+
+.announcement-shadow {
+    background-color: hsl(249, 10%, 26%);
+    height: 50px;
+    transform: translate(0, -115%);
+    border-radius: 10px;
+    z-index: 1;
+    opacity: 0.2;
+}
+
+.announcement-text {
+    padding: 20px;
+    color: white;
+    text-align: center;
+    font-family: PoppinsBold;
+}
+
+.regular-font {
+    font-family: PoppinsRegular;
+}
+
