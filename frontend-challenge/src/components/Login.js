@@ -13,32 +13,48 @@ function Login() {
     const [passwordError, setPasswordError] = useState(false);
 
     const validateFields = (event) =>{
+
         event.preventDefault();
-        if (firstName.length === 0) {
+
+        if ((firstName.length > 0 && firstName.length < 255)
+            && (lastName.length > 0 && lastName.length < 255)
+            && emailValidation() 
+            && (password.length >= 8 && password.length < 255)
+        ) {
+            //send to Backend
+        }
+
+        if (firstName.length === 0 || firstName.length > 255) {
             setFirstNameError(true);
         } else {
             setFirstNameError(false)
         }
 
-        if (lastName.length === 0) {
+        if (lastName.length === 0 || lastName.length > 255) {
             setLastNameError(true);
         } else {
             setLastNameError(false)
         }
 
-        // The validation below sanitizes the input by not accepting characters such as <>"=
-        if (!String(emailAddress).toLowerCase()
-            .match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        if (!emailValidation()) {
             setEmailError(true);
         } else {
             setEmailError(false)
         }
 
-        if (password.length === 0) {
+        if (password.length === 0 || password.length > 255 || password.length < 8) {
             setPasswordError(true);
         } else {
             setPasswordError(false)
         }
+
+    }
+
+    const emailValidation = () => {
+        // The validation below sanitizes the input by not accepting characters such as <>"=, 
+        //this should be done with the other fields as well
+        return String(emailAddress).toLowerCase()
+            .match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
     }
 
     return (
