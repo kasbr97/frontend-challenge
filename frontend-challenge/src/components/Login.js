@@ -40,13 +40,8 @@ function Login() {
                         "password": password
                     })
                 })
-                    // .then((response)=> response.json())
-                    // .then((data)=>{
-                    //     console.log(data)
-                    // })
                 const content = await rawResponse.json()
                 console.log(content)
-
             })();
             
         } else {
