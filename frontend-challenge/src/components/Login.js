@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import './Login.css'
+import EmailValidation from "../hooks/EmailValidation"
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL
 
 function Login() {
 
@@ -9,20 +11,18 @@ function Login() {
     const [emailAddress, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
 
-    const [firstNameError, setFirstNameError] = useState(false);
-    const [lastNameError, setLastNameError] = useState(false);
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-
-    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL
+    //states are numbers to display different types of error messages
+    const [firstNameError, setFirstNameError] = useState(0);
+    const [lastNameError, setLastNameError] = useState(0);
+    const [emailError, setEmailError] = useState(0);
+    const [passwordError, setPasswordError] = useState(0);
 
     const validateFields = (event) =>{
-
         event.preventDefault();
 
         if ((firstName.length > 0 && firstName.length < 255)
             && (lastName.length > 0 && lastName.length < 255)
-            && emailValidation() 
+            && EmailValidation(emailAddress) 
             && (password.length >= 8 && password.length < 255)
         ) {
             //send to Backend
@@ -41,44 +41,54 @@ function Login() {
                     })
                 })
                 const content = await rawResponse.json()
-                console.log(content)
+                if (content.detail) {
+                    alert(content.detail);
+                } else {
+                    setErrorMessagesToFalse()
+                }
+
+                if (content.first_name) {
+                    setErrorMessagesToFalse()
+                    alert("Welcome! User registered with ", content.email);
+                }
             })();
             
         } else {
-
-            
             if (firstName.length === 0 || firstName.length > 255) {
-                setFirstNameError(true);
+                setFirstNameError(1);
             } else {
-                setFirstNameError(false)
+                setFirstNameError(0);
             }
             
             if (lastName.length === 0 || lastName.length > 255) {
-                setLastNameError(true);
+                setLastNameError(1);
             } else {
-                setLastNameError(false)
+                setLastNameError(0);
             }
             
-            if (!emailValidation()) {
-                setEmailError(true);
+            if (emailAddress.length === 0) {
+                setEmailError(1)
+            } else if (!EmailValidation(emailAddress)) {
+                setEmailError(2);
             } else {
-                setEmailError(false)
+                setEmailError(0);
             }
             
-            if (password.length === 0 || password.length > 255 || password.length < 8) {
-                setPasswordError(true);
+            if (password.length === 0 || password.length > 255) {
+                setPasswordError(1);
+            } else if (password.length < 8) {
+                setPasswordError(2);
             } else {
-                setPasswordError(false)
+                setPasswordError(0);
             }
-            
         }
     }
         
-        const emailValidation = () => {
-            // The validation below sanitizes the input by not accepting characters such as <>"=, 
-            //this should be done with the other fields as well
-            return String(emailAddress).toLowerCase()
-            .match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
+    const setErrorMessagesToFalse = () => {
+        setFirstNameError(0);
+        setLastNameError(0);
+        setEmailError(0);
+        setPasswordError(0);
     }
 
     return (
@@ -105,7 +115,7 @@ function Login() {
                         
                         <form className="login-form" onSubmit={(e)=>{validateFields(e)}}>
                             {
-                                firstNameError ?
+                                firstNameError!==0 ?
                                     <>
                                         <label className="label-error">
                                             <input type="text" className="input-login-form-error" 
@@ -121,9 +131,8 @@ function Login() {
                                         value={firstName || ""}>
                                     </input>
                             }
-
                             {
-                                lastNameError ?
+                                lastNameError!==0 ?
                                 <>
                                     <label className="label-error">
                                         <input type="text" className="input-login-form-error"
@@ -139,9 +148,8 @@ function Login() {
                                         value={lastName || ""}>
                                     </input>
                             }
-
                             {
-                                emailError ?
+                                emailError!==0 ?
                                 <>
                                     <label className="label-error">
                                         <input type="text" className="input-login-form-error" 
@@ -149,7 +157,14 @@ function Login() {
                                             value={emailAddress || ""}>
                                         </input>
                                     </label>
-                                    <p className="error-text">Looks like this is not an email</p>
+                                    {
+                                        emailError === 1 &&
+                                        <p className="error-text">Email cannot be empty</p>
+                                    }
+                                    {
+                                        emailError === 2 &&
+                                        <p className="error-text">Looks like this is not an email</p>
+                                    }
                                 </>
                                 :
                                 <input placeholder="Email Address" type="text" className="input-login-form" 
@@ -157,9 +172,8 @@ function Login() {
                                     value={emailAddress || ""}>
                                 </input>
                             }
-
                             {
-                                passwordError ?
+                                passwordError!==0 ?
                                 <>
                                     <label className="label-error">
                                          <input type="password" className="input-login-form-error" 
@@ -167,7 +181,14 @@ function Login() {
                                             value={password || ""}>
                                         </input>
                                     </label>
-                                    <p className="error-text">Password cannot be empty</p>
+                                    {
+                                        passwordError === 1 &&
+                                        <p className="error-text">Password cannot be empty</p>
+                                    }
+                                    {
+                                        passwordError === 2 &&
+                                        <p className="error-text">Password must be of at least 8 characters long</p>
+                                    }
                                 </>
                                 :
                                     <input placeholder="Password" type="password" className="input-login-form" 
@@ -175,9 +196,7 @@ function Login() {
                                         value={password || ""}>
                                     </input>
                             }
-
                             <input type="submit"  value="CLAIM YOUR FREE TRIAL" className="submit-login-btn"/>
-                            
 
                             <p className="agreement-form">
                                 By clicking the button, 
@@ -187,7 +206,6 @@ function Login() {
                     </div>
                 </div>
             </div>
-            
         </div>
     )
 }
