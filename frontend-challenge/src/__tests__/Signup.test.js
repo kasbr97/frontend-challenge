@@ -54,6 +54,7 @@ test("Signup form validateFields() called when only lastName is empty", async ()
     await userEvent.type(screen.getByPlaceholderText("First Name"), "John");
     await userEvent.type(screen.getByPlaceholderText("Email Address"), "johnDoe@example.com");
     await userEvent.type(screen.getByPlaceholderText("Password"), "unsafePassword123");
+    await userEvent.type(screen.getByPlaceholderText("Confirm Password"), "unsafePassword123");
 
     await userEvent.click(screen.getByDisplayValue("CLAIM YOUR FREE TRIAL"));
 
@@ -90,5 +91,6 @@ test("Signup form validateFields() called when password is less than 8 character
 
     expect(screen.getByText(/Password must be of at least 8 characters long/i)).toBeInTheDocument();
 })
+
 
 
