@@ -71,8 +71,8 @@
     font-family: PoppinsRegular;
 }
 
-/********** LOGIN FORM ***********/
-.login-form {
+/********** SIGNUP FORM ***********/
+.signup-form {
     background-color: white;
     border-radius: 10px;
     padding: 30px 30px;
@@ -85,7 +85,7 @@
 }
 
 /* input[type=text], input[type=password] { */
-.input-login-form {
+.input-signup-form {
     width: 100%;
     padding: 12px 20px;
     display: inline-block;
@@ -98,11 +98,11 @@
     margin-bottom: 15px;
 }
 
-.input-login-form:focus {
+.input-signup-form:focus {
     border: 1px solid hsl(248, 32%, 49%);
 }
 
-.input-login-form-error {
+.input-signup-form-error {
     width: 100%;
     padding: 12px 20px;
     display: inline-block;
@@ -135,7 +135,7 @@
     font-style: italic;
 }
 
-.submit-login-btn {
+.submit-signup-btn {
     background-color: hsl(154, 59%, 51%);
     border-radius: 4px;
     padding: 16px 20px 12px 20px;
@@ -150,7 +150,7 @@
     box-shadow: 0px 3px 0px hsl(154, 59%, 43%), 0px 3px 0px rgba(0, 0, 0, .7);
 }
 
-.submit-login-btn:hover {
+.submit-signup-btn:hover {
     background-color: hsl(154, 84%, 63%);
     border: 1px solid hsl(154, 84%, 63%);
 }

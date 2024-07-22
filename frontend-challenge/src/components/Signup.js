@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import './Login.css'
+import './Signup.css'
 import EmailValidation from "../hooks/EmailValidation"
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL
 
-function Login() {
+function Signup() {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -113,12 +113,12 @@ function Login() {
                             </p>
                         </div>
                         
-                        <form className="login-form" onSubmit={(e)=>{validateFields(e)}}>
+                        <form className="signup-form" onSubmit={(e)=>{validateFields(e)}}>
                             {
                                 firstNameError!==0 ?
                                     <>
                                         <label className="label-error">
-                                            <input type="text" className="input-login-form-error" 
+                                            <input type="text" className="input-signup-form-error" 
                                                 onChange={(e)=>{setFirstName(e.target.value)}}
                                                 value={firstName || ""}>
                                             </input>
@@ -126,7 +126,7 @@ function Login() {
                                         <p className="error-text">First Name cannot be empty</p>
                                     </>
                                 :
-                                    <input placeholder="First Name" type="text" className="input-login-form" 
+                                    <input placeholder="First Name" type="text" className="input-signup-form" 
                                         onChange={(e)=>{setFirstName(e.target.value)}}
                                         value={firstName || ""}>
                                     </input>
@@ -135,7 +135,7 @@ function Login() {
                                 lastNameError!==0 ?
                                 <>
                                     <label className="label-error">
-                                        <input type="text" className="input-login-form-error"
+                                        <input type="text" className="input-signup-form-error"
                                             onChange={(e)=>{setLastName(e.target.value)}}
                                             value={lastName || ""}>
                                         </input>
@@ -143,7 +143,7 @@ function Login() {
                                     <p className="error-text">Last Name cannot be empty</p>
                                 </>
                                 :
-                                    <input placeholder="Last Name" type="text" className="input-login-form"
+                                    <input placeholder="Last Name" type="text" className="input-signup-form"
                                         onChange={(e)=>{setLastName(e.target.value)}}
                                         value={lastName || ""}>
                                     </input>
@@ -152,7 +152,7 @@ function Login() {
                                 emailError!==0 ?
                                 <>
                                     <label className="label-error">
-                                        <input type="text" className="input-login-form-error" 
+                                        <input type="text" className="input-signup-form-error" 
                                             onChange={(e)=>{setEmailAddress(e.target.value)}}
                                             value={emailAddress || ""}>
                                         </input>
@@ -167,7 +167,7 @@ function Login() {
                                     }
                                 </>
                                 :
-                                <input placeholder="Email Address" type="text" className="input-login-form" 
+                                <input placeholder="Email Address" type="text" className="input-signup-form" 
                                     onChange={(e)=>{setEmailAddress(e.target.value)}}
                                     value={emailAddress || ""}>
                                 </input>
@@ -176,7 +176,7 @@ function Login() {
                                 passwordError!==0 ?
                                 <>
                                     <label className="label-error">
-                                         <input type="password" className="input-login-form-error" 
+                                         <input type="password" className="input-signup-form-error" 
                                             onChange={(e)=>{setPassword(e.target.value)}}
                                             value={password || ""}>
                                         </input>
@@ -191,12 +191,12 @@ function Login() {
                                     }
                                 </>
                                 :
-                                    <input placeholder="Password" type="password" className="input-login-form" 
+                                    <input placeholder="Password" type="password" className="input-signup-form" 
                                         onChange={(e)=>{setPassword(e.target.value)}}
                                         value={password || ""}>
                                     </input>
                             }
-                            <input type="submit"  value="CLAIM YOUR FREE TRIAL" className="submit-login-btn"/>
+                            <input type="submit"  value="CLAIM YOUR FREE TRIAL" className="submit-signup-btn"/>
 
                             <p className="agreement-form">
                                 By clicking the button, 
@@ -210,4 +210,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default Signup;
