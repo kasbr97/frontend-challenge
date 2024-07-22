@@ -7,7 +7,7 @@ Be sure to clone the backend-challenge repository and next create the .env file 
 
 Within the src folder, the there will be 3 more folders:
 
-1. Components: where the code for the Login component is and where other components will be later on. Since there's only the Login component, there's not folder for it. In the future, there should be a folder for each of the components like: Login folder, Home folder, Profile folder, etc
+1. Components: where the code for the Signup component is and where other components will be later on. Since there's only the Signup component, there's not folder for it. In the future, there should be a folder for each of the components like: Signup folder, Home folder, Profile folder, etc
 2. Hooks: Self explainatory, all the hooks for the code will be here (although there only is one hook for now).
 3. Fonts: All the fonts from the Poppins font family.
 
