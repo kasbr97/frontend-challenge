@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import './Signup.css'
 import EmailValidation from "../hooks/EmailValidation"
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL
+import RegisterUserData from '../api/RegisterUserData';
 
 function Signup() {
 
@@ -27,20 +26,8 @@ function Signup() {
         ) {
             //send to Backend
             (async ()=>{
-                const rawResponse = await fetch(BACKEND_URL + "users/", {
-                    method: "POST",
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        "first_name": firstName,
-                        "last_name": lastName,
-                        "email": emailAddress,
-                        "password": password
-                    })
-                })
-                const content = await rawResponse.json()
+                const content = await RegisterUserData(firstName, lastName, emailAddress, password);
+                
                 if (content.detail) {
                     alert(content.detail);
                 } else {
@@ -196,7 +183,7 @@ function Signup() {
                                         value={password || ""}>
                                     </input>
                             }
-                            <input type="submit"  value="CLAIM YOUR FREE TRIAL" className="submit-signup-btn"/>
+                            <input type="submit" value="CLAIM YOUR FREE TRIAL" className="submit-signup-btn"/>
 
                             <p className="agreement-form">
                                 By clicking the button, 
