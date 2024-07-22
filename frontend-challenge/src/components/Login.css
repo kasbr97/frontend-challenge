@@ -4,7 +4,7 @@
 
 .background-img {
     display: flex;
-    background-image: url("./../../images/bg-intro-desktop.png");
+    background-image: url("./../../images/bg-intro-mobile.png");
     background-color: hsl(0, 100%, 74%);
     min-height: 100vh;
 }
@@ -27,13 +27,13 @@
 
 .size-left-div {
     float: none;
-    width: 80%;
+    width: 85%;
     margin: auto;
 }
 
 .size-right-div {
     float: none;
-    width: 80%;
+    width: 85%;
     margin: auto;
 }
 
@@ -168,8 +168,12 @@
     color: hsl(0, 100%, 74%);
 }
 
-/* Mobile: 375px */
+/* Desktop: 1440px */
 @media only screen and (min-width: 768px) {
+
+    [class*="background-img"] {
+        background-image: url("./../../images/bg-intro-desktop.png");
+    }
 
     [class*="col-6"] {
         width: 50%;
