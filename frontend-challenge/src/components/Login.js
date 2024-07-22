@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import './Login.css'
 
+
 function Login() {
+
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [emailAddress, setEmailAddress] = useState("");
@@ -11,6 +13,8 @@ function Login() {
     const [lastNameError, setLastNameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+
+    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL
 
     const validateFields = (event) =>{
 
@@ -22,38 +26,63 @@ function Login() {
             && (password.length >= 8 && password.length < 255)
         ) {
             //send to Backend
-        }
+            (async ()=>{
+                const rawResponse = await fetch(BACKEND_URL + "users/", {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "first_name": firstName,
+                        "last_name": lastName,
+                        "email": emailAddress,
+                        "password": password
+                    })
+                })
+                    // .then((response)=> response.json())
+                    // .then((data)=>{
+                    //     console.log(data)
+                    // })
+                const content = await rawResponse.json()
+                console.log(content)
 
-        if (firstName.length === 0 || firstName.length > 255) {
-            setFirstNameError(true);
+            })();
+            
         } else {
-            setFirstNameError(false)
-        }
 
-        if (lastName.length === 0 || lastName.length > 255) {
-            setLastNameError(true);
-        } else {
-            setLastNameError(false)
+            
+            if (firstName.length === 0 || firstName.length > 255) {
+                setFirstNameError(true);
+            } else {
+                setFirstNameError(false)
+            }
+            
+            if (lastName.length === 0 || lastName.length > 255) {
+                setLastNameError(true);
+            } else {
+                setLastNameError(false)
+            }
+            
+            if (!emailValidation()) {
+                setEmailError(true);
+            } else {
+                setEmailError(false)
+            }
+            
+            if (password.length === 0 || password.length > 255 || password.length < 8) {
+                setPasswordError(true);
+            } else {
+                setPasswordError(false)
+            }
+            
         }
-
-        if (!emailValidation()) {
-            setEmailError(true);
-        } else {
-            setEmailError(false)
-        }
-
-        if (password.length === 0 || password.length > 255 || password.length < 8) {
-            setPasswordError(true);
-        } else {
-            setPasswordError(false)
-        }
-
     }
-
-    const emailValidation = () => {
-        // The validation below sanitizes the input by not accepting characters such as <>"=, 
-        //this should be done with the other fields as well
-        return String(emailAddress).toLowerCase()
+        
+        const emailValidation = () => {
+            // The validation below sanitizes the input by not accepting characters such as <>"=, 
+            //this should be done with the other fields as well
+            return String(emailAddress).toLowerCase()
             .match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
     }
 
