@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import './Signup.css'
-import EmailValidation from "../hooks/EmailValidation"
+import { useEffect, useState } from 'react';
+import './Signup.css';
+import EmailValidation from "../hooks/EmailValidation";
 import RegisterUserData from '../api/RegisterUserData';
 
 function Signup() {
@@ -9,12 +9,14 @@ function Signup() {
     const [lastName, setLastName] = useState("");
     const [emailAddress, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmedPassword, setConfirmedPassword] = useState("");
 
     //states are numbers to display different types of error messages
-    const [firstNameError, setFirstNameError] = useState(0);
-    const [lastNameError, setLastNameError] = useState(0);
-    const [emailError, setEmailError] = useState(0);
-    const [passwordError, setPasswordError] = useState(0);
+    const [firstNameError, setFirstNameError] = useState("");
+    const [lastNameError, setLastNameError] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [confirmedPasswordError, setConfirmedPasswordError] = useState("");
 
     const validateFields = (event) =>{
         event.preventDefault();
@@ -23,6 +25,7 @@ function Signup() {
             && (lastName.length > 0 && lastName.length < 255)
             && EmailValidation(emailAddress) 
             && (password.length >= 8 && password.length < 255)
+            && (password === confirmedPassword)
         ) {
             //send to Backend
             (async ()=>{
@@ -36,47 +39,62 @@ function Signup() {
 
                 if (content.first_name) {
                     setErrorMessagesToFalse()
-                    alert("Welcome! User registered with ", content.email);
+                    alert("User registered!");
                 }
             })();
             
         } else {
             if (firstName.length === 0 || firstName.length > 255) {
-                setFirstNameError(1);
+                setFirstNameError("empty");
             } else {
-                setFirstNameError(0);
+                setFirstNameError("");
             }
             
             if (lastName.length === 0 || lastName.length > 255) {
-                setLastNameError(1);
+                setLastNameError("empty");
             } else {
-                setLastNameError(0);
+                setLastNameError("");
             }
             
             if (emailAddress.length === 0) {
-                setEmailError(1)
+                setEmailError("empty")
             } else if (!EmailValidation(emailAddress)) {
-                setEmailError(2);
+                setEmailError("invalidEmail");
             } else {
-                setEmailError(0);
+                setEmailError("");
             }
             
             if (password.length === 0 || password.length > 255) {
-                setPasswordError(1);
+                setPasswordError("empty");
             } else if (password.length < 8) {
-                setPasswordError(2);
+                setPasswordError("longerPwd");
             } else {
-                setPasswordError(0);
+                setPasswordError("");
+            }
+
+            if (confirmedPassword.length === 0) {
+                setConfirmedPasswordError("empty");
             }
         }
     }
         
     const setErrorMessagesToFalse = () => {
-        setFirstNameError(0);
-        setLastNameError(0);
-        setEmailError(0);
-        setPasswordError(0);
+        setFirstNameError("");
+        setLastNameError("");
+        setEmailError("");
+        setPasswordError("");
+        setConfirmedPasswordError("");
     }
+
+    useEffect(()=>{
+        if (password) {
+            if (confirmedPassword !== password && confirmedPassword.length > 0) {
+                setConfirmedPasswordError("notMatch");
+            } else {
+                setConfirmedPasswordError("");
+            }
+        }
+    },[confirmedPassword, password])
 
     return (
         <div className="background-img">
@@ -102,7 +120,7 @@ function Signup() {
                         
                         <form className="signup-form" onSubmit={(e)=>{validateFields(e)}}>
                             {
-                                firstNameError!==0 ?
+                                firstNameError==="empty" ?
                                     <>
                                         <label className="label-error">
                                             <input type="text" className="input-signup-form-error" 
@@ -119,7 +137,7 @@ function Signup() {
                                     </input>
                             }
                             {
-                                lastNameError!==0 ?
+                                lastNameError==="empty" ?
                                 <>
                                     <label className="label-error">
                                         <input type="text" className="input-signup-form-error"
@@ -136,7 +154,7 @@ function Signup() {
                                     </input>
                             }
                             {
-                                emailError!==0 ?
+                                emailError !== "" ?
                                 <>
                                     <label className="label-error">
                                         <input type="text" className="input-signup-form-error" 
@@ -145,11 +163,11 @@ function Signup() {
                                         </input>
                                     </label>
                                     {
-                                        emailError === 1 &&
+                                        emailError === "empty" &&
                                         <p className="error-text">Email cannot be empty</p>
                                     }
                                     {
-                                        emailError === 2 &&
+                                        emailError === "invalidEmail" &&
                                         <p className="error-text">Looks like this is not an email</p>
                                     }
                                 </>
@@ -160,7 +178,7 @@ function Signup() {
                                 </input>
                             }
                             {
-                                passwordError!==0 ?
+                                passwordError !== "" ?
                                 <>
                                     <label className="label-error">
                                          <input type="password" className="input-signup-form-error" 
@@ -169,11 +187,11 @@ function Signup() {
                                         </input>
                                     </label>
                                     {
-                                        passwordError === 1 &&
+                                        passwordError === "empty" &&
                                         <p className="error-text">Password cannot be empty</p>
                                     }
                                     {
-                                        passwordError === 2 &&
+                                        passwordError === "longerPwd" &&
                                         <p className="error-text">Password must be of at least 8 characters long</p>
                                     }
                                 </>
@@ -182,6 +200,31 @@ function Signup() {
                                         onChange={(e)=>{setPassword(e.target.value)}}
                                         value={password || ""}>
                                     </input>
+                            }
+
+                            {
+                                confirmedPasswordError==="empty" ?
+                                <>
+                                    <label className="label-error">
+                                         <input type="password" className="input-signup-form-error" 
+                                            onChange={(e)=>{setConfirmedPassword(e.target.value)}}
+                                            value={confirmedPassword || ""}>
+                                        </input>
+                                    </label>
+                                    <p className="error-text">Field cannot be empty</p>
+                                </>
+                                :
+                                <>
+                                    <input placeholder="Confirm Password" type="password" 
+                                        className={confirmedPasswordError === "notMatch" ? "input-signup-form-error" :"input-signup-form"} 
+                                        onChange={(e)=>{setConfirmedPassword(e.target.value)}}
+                                        value={confirmedPassword || ""}>
+                                    </input>
+                                    {
+                                        confirmedPasswordError === "notMatch" &&
+                                        <p className="error-text">Passwords do not match</p>
+                                    }
+                                </>
                             }
                             <input type="submit" value="CLAIM YOUR FREE TRIAL" className="submit-signup-btn"/>
 
