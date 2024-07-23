@@ -16,7 +16,7 @@ const RegisterUserData = async (firstn, lastn, emailA, pwd) => {
                     })
                 })
         return await rawResponse.json()
-        
+         
     } catch(error) {
         console.log(error)
     }

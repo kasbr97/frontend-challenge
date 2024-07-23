@@ -39,7 +39,7 @@ function Signup() {
 
                 if (content.first_name) {
                     setErrorMessagesToFalse()
-                    alert("Welcome! User registered with ", content.email);
+                    alert("User registered!");
                 }
             })();
             
