@@ -222,7 +222,7 @@ function Signup() {
                                     </input>
                                     {
                                         confirmedPasswordError === "notMatch" &&
-                                        <p className="error-text">Password does not match</p>
+                                        <p className="error-text">Passwords do not match</p>
                                     }
                                 </>
                             }
