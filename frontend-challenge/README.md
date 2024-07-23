@@ -20,9 +20,6 @@ Within the src folder, the there will be 3 more folders:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
 ### `npm test`
 
 Launches the test runner in the interactive watch mode. It will show in the console all the test suites, tests passed, snapshots and time taken to run all the tests.
